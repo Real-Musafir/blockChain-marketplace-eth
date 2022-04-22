@@ -1,5 +1,5 @@
 import { Modal } from "@components/common";
-import { CoureHero, Curriculum, Keypoints } from "@components/common/course";
+import { CoureHero, Curriculum, Keypoints } from "@components/course";
 import { BaseLayout } from "@components/common/layout";
 
 export default function Course() {
