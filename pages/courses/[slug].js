@@ -6,9 +6,12 @@ import { getAllCourse } from "@content/courses/fetcher";
 export default function Course({ course }) {
   return (
     <>
-      {course.title}
       <div className="py-4">
-        <CoureHero />
+        <CoureHero
+          title={course.title}
+          description={course.description}
+          image={course.coverImage}
+        />
       </div>
       <Keypoints />
       <Curriculum />
