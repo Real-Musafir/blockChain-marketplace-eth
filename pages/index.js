@@ -1,11 +1,14 @@
-import { Hero } from "@components/common";
-import { CourseList } from "@components/course";
-import { BaseLayout } from "@components/common/layout";
+import { Hero } from "@components/ui/common";
+import { CourseList } from "@components/ui/course";
+import { BaseLayout } from "@components/ui/layout";
 import { getAllCourse } from "@content/courses/fetcher";
+import { useWeb3 } from "@components/providers";
 
 export default function Home({ courses }) {
+  const { test } = useWeb3();
   return (
     <>
+      {test}
       <Hero />
       <CourseList courses={courses} />
     </>
@@ -22,10 +25,3 @@ export function getStaticProps() {
 }
 
 Home.Layout = BaseLayout;
-
-{
-  /* <Breadcrumbs />
-      <WalletBar />
-      <EthRates />
-      <OrderCard /> */
-}
