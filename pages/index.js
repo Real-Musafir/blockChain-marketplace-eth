@@ -5,10 +5,11 @@ import { getAllCourse } from "@content/courses/fetcher";
 import { useWeb3 } from "@components/providers";
 
 export default function Home({ courses }) {
-  const { test } = useWeb3();
+  const { web3, isInitialized } = useWeb3();
+  console.log(web3);
   return (
     <>
-      {test}
+      {isInitialized ? "Is Init" : "Is not Init"}
       <Hero />
       <CourseList courses={courses} />
     </>
