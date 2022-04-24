@@ -10,12 +10,12 @@ export default function Web3Provider({ children }) {
     provider: null,
     web3: null,
     contract: null,
-    isInitialized: false,
+    isLoading: true,
   });
 
   useEffect(() => {
     const loadProvider = async () => {
-      const provider = await detectEthereumProvider;
+      const provider = await detectEthereumProvider();
       if (provider) {
         const web3 = new Web3(provider);
 
@@ -23,10 +23,10 @@ export default function Web3Provider({ children }) {
           provider,
           web3,
           contract: null,
-          isInitialized: true,
+          isLoading: false,
         });
       } else {
-        setWeb3Api((api) => ({ ...api, isInitialized: true }));
+        setWeb3Api((api) => ({ ...api, isLoading: false }));
         console.log("Please, Install Metamask");
       }
     };

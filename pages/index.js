@@ -5,11 +5,14 @@ import { getAllCourse } from "@content/courses/fetcher";
 import { useWeb3 } from "@components/providers";
 
 export default function Home({ courses }) {
-  const { web3, isInitialized } = useWeb3();
-  console.log(web3);
+  const { web3, isLoading } = useWeb3();
   return (
     <>
-      {isInitialized ? "Is Init" : "Is not Init"}
+      {isLoading
+        ? "Is Loading Web3..."
+        : web3
+        ? "web 3 Ready!"
+        : "Please Install Metamask"}
       <Hero />
       <CourseList courses={courses} />
     </>
