@@ -8,7 +8,6 @@ export default function Navbar() {
   const { account } = useAccount();
   return (
     <section>
-      {account}
       <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
         <nav className="relative" aria-label="Global">
           <div className="flex justify-between items-center">
@@ -40,9 +39,15 @@ export default function Navbar() {
                   Loading...
                 </Button>
               ) : isWeb3Loaded ? (
-                <Button onClick={connect} href="#">
-                  Connect
-                </Button>
+                account ? (
+                  <Button hoverable={false} className="cursor-default">
+                    Hi there
+                  </Button>
+                ) : (
+                  <Button onClick={connect} href="#">
+                    Connect
+                  </Button>
+                )
               ) : (
                 <Button
                   onClick={() => window.open("https://metamask.io/", "_blank")}
