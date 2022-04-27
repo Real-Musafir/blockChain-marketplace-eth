@@ -1,8 +1,12 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
+const addminAddress = {
+  "0x10CCD2129D58c8F93beb13892CDC3cbf09E0EC9e": true,
+};
+
 export const handler = (web3, provider) => () => {
-  const { mutate, ...rest } = useSWR(
+  const { data, mutate, ...rest } = useSWR(
     web3 ? "web3/accounts" : null,
     async () => {
       const accounts = await web3.eth.getAccounts();
@@ -18,6 +22,8 @@ export const handler = (web3, provider) => () => {
   }, [provider]);
   return {
     account: {
+      data,
+      isAdmin: (data && addminAddress[data]) ?? false,
       mutate,
       ...rest,
     },
