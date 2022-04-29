@@ -12,7 +12,8 @@ export const handler = (web3, provider) => () => {
   );
 
   useEffect(() => {
-    provider && provider.on("chainChanged", (chainId) => mutate(chainId));
+    provider &&
+      provider.on("chainChanged", (chainId) => mutate(parseInt(chainId, 16)));
   }, [web3]);
 
   return {
