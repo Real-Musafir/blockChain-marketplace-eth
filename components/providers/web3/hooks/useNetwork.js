@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 export const handler = (web3, provider) => () => {
   //prettier-ignore
-  const swrResponse = useSWR(() => 
+  const {mutate, ...rest} = useSWR(() => 
     web3 ? "web3/network" : null,
       async () => {
         const netId = await web3.eth.net.getId();
@@ -11,9 +11,14 @@ export const handler = (web3, provider) => () => {
       }
   );
 
+  useEffect(() => {
+    provider && provider.on("chainChanged", (netId) => mutate(netId));
+  }, [web3]);
+
   return {
     network: {
-      ...swrResponse,
+      mutate,
+      ...rest,
     },
   };
 };
