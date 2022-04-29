@@ -33,7 +33,7 @@ export const handler = (web3, provider) => () => {
   return {
     network: {
       data,
-      isLoading: !data && !error,
+      hasFinishedFirstFetch: data && error,
       mutate,
       target: targetNetwork,
       isSupported: data === targetNetwork,

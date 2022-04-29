@@ -18,7 +18,7 @@ export default function Marketplace({ courses }) {
             data: network.data,
             target: network.target,
             isSupported: network.isSupported,
-            isLoading: network.isLoading,
+            hasFinishedFirstFetch: network.hasFinishedFirstFetch,
           }}
         />
         <CourseList courses={courses}>
