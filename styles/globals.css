@@ -5,3 +5,6 @@
 .fit {
   min-height: calc(100vh - 88px);
 }
+.next-image-wrapper > div {
+  height: 100%;
+}
