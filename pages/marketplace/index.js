@@ -1,5 +1,5 @@
 import { useNetwork, useAccount } from "@components/hooks/web3";
-import { Button } from "@components/ui/common";
+import { Button, Modal } from "@components/ui/common";
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { WalletBar } from "@components/ui/web3";
@@ -34,6 +34,7 @@ export default function Marketplace({ courses }) {
             />
           )}
         </CourseList>
+        <Modal isOpen={false} />
       </div>
     </>
   );
