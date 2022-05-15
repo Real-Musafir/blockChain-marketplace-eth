@@ -12,6 +12,7 @@ export default function OrderModal({ course, onClose }) {
   const [isOpen, setIsOpen] = useState(false);
   const [order, setOrder] = useState(defaultOrder);
   const [enablePrice, setEnablePrice] = useState(false);
+  const [hasAgreeTOS, setHasAgreeTOS] = useState(false);
   const { eth } = useEthPrice();
 
   const _createFormState = (isDisabled = false, message = "") => ({
@@ -19,13 +20,17 @@ export default function OrderModal({ course, onClose }) {
     message,
   });
 
-  const createFormState = ({ price, email, confirmationEmail }) => {
+  //prettier-ignore
+  const createFormState = ({ price, email, confirmationEmail }, hasAgreeTOS) => {
+    console.log(hasAgreeTOS, "Okkk")
     if (!price || Number(price) <= 0) {
       return _createFormState(true, "Price is not valid");
     } else if (confirmationEmail.length === 0 || email.length === 0) {
-      return _createFormState(true, "Please email and confirmation mail");
+      return _createFormState(true);
     } else if (email !== confirmationEmail) {
       return _createFormState(true, "Confirmation mail doesn't match");
+    }else if(!hasAgreeTOS){
+      return _createFormState(true, "You need to accept terms & conditions")
     }
 
     return _createFormState();
@@ -44,10 +49,12 @@ export default function OrderModal({ course, onClose }) {
   const closeModal = () => {
     setIsOpen(false);
     setOrder(defaultOrder);
+    setEnablePrice(false);
+    setHasAgreeTOS(false);
     onClose();
   };
 
-  const formState = createFormState(order);
+  const formState = createFormState(order, hasAgreeTOS);
 
   return (
     <Modal isOpen={isOpen}>
@@ -150,7 +157,14 @@ export default function OrderModal({ course, onClose }) {
               </div>
               <div className="text-xs text-gray-700 flex">
                 <label className="flex items-center mr-2">
-                  <input type="checkbox" className="form-checkbox" />
+                  <input
+                    checked={hasAgreeTOS}
+                    onChange={({ target: { checked } }) => {
+                      setHasAgreeTOS(checked);
+                    }}
+                    type="checkbox"
+                    className="form-checkbox"
+                  />
                 </label>
                 <span>
                   I accept Eincode &apos;terms of service&apos; and I agree that
