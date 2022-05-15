@@ -11,6 +11,7 @@ const defaultOrder = {
 export default function OrderModal({ course, onClose }) {
   const [isOpen, setIsOpen] = useState(false);
   const [order, setOrder] = useState(defaultOrder);
+  const [enablePrice, setEnablePrice] = useState(false);
   const { eth } = useEthPrice();
 
   useEffect(() => {
@@ -46,7 +47,19 @@ export default function OrderModal({ course, onClose }) {
                   <label className="mb-2 font-bold">Price(eth)</label>
                   <div className="text-xs text-gray-700 flex">
                     <label className="flex items-center mr-2">
-                      <input type="checkbox" className="form-checkbox" />
+                      <input
+                        checked={enablePrice}
+                        onChange={(event) => {
+                          const check = event.target.checked;
+                          setOrder({
+                            ...order,
+                            price: check ? order.price : eth.perItem,
+                          });
+                          setEnablePrice(check);
+                        }}
+                        type="checkbox"
+                        className="form-checkbox"
+                      />
                     </label>
                     <span>
                       Adjust Price - only when the price is not correct
@@ -54,6 +67,7 @@ export default function OrderModal({ course, onClose }) {
                   </div>
                 </div>
                 <input
+                  disabled={!enablePrice}
                   value={order.price}
                   onChange={(event) => {
                     const value = event.target.value;
