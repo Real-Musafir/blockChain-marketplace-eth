@@ -17,4 +17,16 @@ contract CourseMarketplace {
         State state; //1
     }
 
+    function purchaseCourse(
+            bytes16 courseId,
+            bytes32 proof
+            ) 
+            external
+            payable
+            returns(bytes32) 
+            {
+                bytes32 courseHash = keccak256(abi.encodePacked(courseId, msg.sender));
+                return courseHash;
+            }
+
 }
