@@ -22,7 +22,6 @@ export default function OrderModal({ course, onClose, onSubmit }) {
 
   //prettier-ignore
   const createFormState = ({ price, email, confirmationEmail }, hasAgreeTOS) => {
-    console.log(hasAgreeTOS, "Okkk")
     if (!price || Number(price) <= 0) {
       return _createFormState(true, "Price is not valid");
     } else if (confirmationEmail.length === 0 || email.length === 0) {

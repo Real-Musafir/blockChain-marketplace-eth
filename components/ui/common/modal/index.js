@@ -14,7 +14,7 @@ export default function Modal({ isOpen, children }) {
           {isOpen && (
             <div
               className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-              ariaHidden="true"
+              aria-hidden="true"
             ></div>
           )}
           <span
