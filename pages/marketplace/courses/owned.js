@@ -7,7 +7,7 @@ import { getAllCourse } from "@content/courses/fetcher";
 
 export default function OwnedCourses({ courses }) {
   const { account } = useAccount();
-  const { ownedCourses } = useOwnedCourses(courses, account);
+  const { ownedCourses } = useOwnedCourses(courses, account.data);
 
   return (
     <>
