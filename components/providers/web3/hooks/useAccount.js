@@ -10,7 +10,15 @@ export const handler = (web3, provider) => () => {
     web3 ? "web3/accounts" : null,
     async () => {
       const accounts = await web3.eth.getAccounts();
-      return accounts[0];
+
+      const account = accounts[0];
+      if (!account) {
+        throw new Error(
+          "Cannot retreive an account. Please refresh the browser."
+        );
+      }
+
+      if (!account) return account;
     }
   );
 
