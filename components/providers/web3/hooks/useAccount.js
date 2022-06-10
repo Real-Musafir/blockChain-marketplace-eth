@@ -18,7 +18,7 @@ export const handler = (web3, provider) => () => {
         );
       }
 
-      if (!account) return account;
+      return account;
     }
   );
 
