@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function OwnedCourses({ courses }) {
+  console.log(courses);
   const router = useRouter();
   const { requireInstall } = useWeb3();
   const { account } = useAccount();

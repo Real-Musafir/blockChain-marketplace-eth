@@ -1,32 +1,44 @@
-import { MarketHeader } from "@components/ui/marketplace";
-import { BaseLayout } from "@components/ui/layout";
+import { useAccount, useManagedCourses } from "@components/hooks/web3";
+import { useWeb3 } from "@components/providers";
+import { Button, Message } from "@components/ui/common";
 import {
   CourseFilter,
   ManagedCourseCard,
   OwnedCourseCard,
 } from "@components/ui/course";
-import { Button } from "@components/ui/common";
-import { useAccount, useManagedCourses } from "@components/hooks/web3";
+import { BaseLayout } from "@components/ui/layout";
+import { MarketHeader } from "@components/ui/marketplace";
 import { useState } from "react";
 
 export default function ManagedCourses() {
   const [email, setEmail] = useState("");
-
+  const [proofedOwnership, setProofedOwnership] = useState({});
+  const { web3 } = useWeb3();
   const { account } = useAccount();
   const { managedCourses } = useManagedCourses(account.data);
 
   const verifyCourse = (email, { hash, proof }) => {
-    console.log(email);
-    console.log(hash);
+    const emailHash = web3.utils.sha3(email);
+    const proofToCheck = web3.utils.soliditySha3(
+      { type: "bytes32", value: emailHash },
+      { type: "bytes32", value: hash }
+    );
+    console.log(proofToCheck);
     console.log(proof);
+
+    proofToCheck === proof
+      ? setProofedOwnership({
+          [hash]: true,
+        })
+      : setProofedOwnership({
+          [hash]: false,
+        });
   };
 
-  console.log(managedCourses.data?.length, "This data");
   return (
     <>
       <MarketHeader />
       <CourseFilter />
-
       <section className="grid grid-cols-1">
         {managedCourses.data?.map((course) => (
           <ManagedCourseCard key={course.ownedCourseId} course={course}>
@@ -51,6 +63,16 @@ export default function ManagedCourses() {
                 Verify
               </Button>
             </div>
+            {proofedOwnership[course.hash] && (
+              <div className="mt-2">
+                <Message>Verified!</Message>
+              </div>
+            )}
+            {proofedOwnership[course.hash] === false && (
+              <div className="mt-2">
+                <Message type="danger">Wrong Proof!</Message>
+              </div>
+            )}
           </ManagedCourseCard>
         ))}
       </section>
