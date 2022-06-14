@@ -1,7 +1,7 @@
 import { Hero } from "@components/ui/common";
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
-import { getAllCourse } from "@content/courses/fetcher";
+import { getAllCourses } from "@content/courses/fetcher";
 
 export default function Home({ courses }) {
   return (
@@ -15,7 +15,7 @@ export default function Home({ courses }) {
 }
 
 export function getStaticProps() {
-  const { data } = getAllCourse();
+  const { data } = getAllCourses();
   return {
     props: {
       courses: data,
