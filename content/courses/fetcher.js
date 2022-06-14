@@ -1,6 +1,6 @@
 import courses from "./index.json";
 
-export const getAllCourse = () => {
+export const getAllCourses = () => {
   return {
     data: courses,
     courseMap: courses.reduce((a, c, i) => {

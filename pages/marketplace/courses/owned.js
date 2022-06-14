@@ -4,7 +4,7 @@ import { Button, Message } from "@components/ui/common";
 import { OwnedCourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
-import { getAllCourse } from "@content/courses/fetcher";
+import { getAllCourses } from "@content/courses/fetcher";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -60,7 +60,7 @@ export default function OwnedCourses({ courses }) {
   );
 }
 export function getStaticProps() {
-  const { data } = getAllCourse();
+  const { data } = getAllCourses();
   return {
     props: {
       courses: data,

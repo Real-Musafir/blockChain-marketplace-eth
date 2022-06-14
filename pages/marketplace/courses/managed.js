@@ -48,6 +48,9 @@ export default function ManagedCourses() {
       { type: "bytes32", value: hash }
     );
 
+    console.log(proof, "check1");
+    console.log(proofToCheck, "check2");
+
     proofToCheck === proof
       ? setProofedOwnership({
           ...proofedOwnership,
