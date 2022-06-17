@@ -9,8 +9,8 @@ import { MarketHeader } from "@components/ui/marketplace";
 import { useWeb3 } from "@components/providers";
 
 export default function Marketplace({ courses }) {
-  const { web3, contract } = useWeb3();
-  const { canPurchaseCourse, account } = useWalletInfo();
+  const { web3, contract, requireInstall } = useWeb3();
+  const { hasConnectedWallet, isConnecting, account } = useWalletInfo();
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   const purchaseCourse = async (order) => {
@@ -45,18 +45,40 @@ export default function Marketplace({ courses }) {
           <CourseCard
             key={course.id}
             course={course}
-            disabled={!canPurchaseCourse}
-            Footer={() => (
-              <div className="mt-4">
-                <Button
-                  onClick={() => setSelectedCourse(course)}
-                  disabled={!canPurchaseCourse}
-                  variant="lightPurple"
-                >
-                  Purchase
-                </Button>
-              </div>
-            )}
+            disabled={!hasConnectedWallet}
+            Footer={() => {
+              if (requireInstall) {
+                return (
+                  <div className="mt-4">
+                    <Button disabled={true} variant="lightPurple">
+                      Install
+                    </Button>
+                  </div>
+                );
+              }
+
+              if (requireInstall) {
+                return (
+                  <div className="mt-4">
+                    <Button disabled={true} variant="lightPurple">
+                      Loading...
+                    </Button>
+                  </div>
+                );
+              }
+
+              return (
+                <div className="mt-4">
+                  <Button
+                    onClick={() => setSelectedCourse(course)}
+                    disabled={!hasConnectedWallet}
+                    variant="lightPurple"
+                  >
+                    Purchase
+                  </Button>
+                </div>
+              );
+            }}
           />
         )}
       </CourseList>
