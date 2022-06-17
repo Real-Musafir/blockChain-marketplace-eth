@@ -3,7 +3,7 @@ import Image from "next/image";
 const STATE_COLORS = {
   purchased: "indigo",
   activated: "green",
-  deactivated: "red",
+  deactivated: "yellow",
 };
 
 export default function OwnedCourseCard({ children, course }) {

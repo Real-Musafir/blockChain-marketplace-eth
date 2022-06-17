@@ -3,7 +3,7 @@ import { useWeb3 } from "@components/providers";
 import { Message, Modal } from "@components/ui/common";
 import { CoureHero, Curriculum, Keypoints } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
-import { getAllCourse } from "@content/courses/fetcher";
+import { getAllCourses } from "@content/courses/fetcher";
 
 export default function Course({ course }) {
   const { account } = useAccount();
@@ -65,7 +65,7 @@ export default function Course({ course }) {
 }
 
 export function getStaticPaths() {
-  const { data } = getAllCourse();
+  const { data } = getAllCourses();
 
   return {
     paths: data.map((c) => ({
@@ -78,7 +78,7 @@ export function getStaticPaths() {
 }
 
 export function getStaticProps({ params }) {
-  const { data } = getAllCourse();
+  const { data } = getAllCourses();
   const course = data.filter((c) => c.slug === params.slug)[0];
   return {
     props: {
