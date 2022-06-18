@@ -1,7 +1,7 @@
 import { CourseCard, CourseList } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
-import { useWalletInfo } from "@components/hooks/web3";
+import { useOwnedCourses, useWalletInfo } from "@components/hooks/web3";
 import { Button } from "@components/ui/common";
 import { OrderModal } from "@components/ui/order";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { useWeb3 } from "@components/providers";
 export default function Marketplace({ courses }) {
   const { web3, contract, requireInstall } = useWeb3();
   const { hasConnectedWallet, isConnecting, account } = useWalletInfo();
+  const { ownedCourses } = useOwnedCourses(courses, account.data);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   const purchaseCourse = async (order) => {
@@ -57,7 +58,7 @@ export default function Marketplace({ courses }) {
                 );
               }
 
-              if (requireInstall) {
+              if (isConnecting) {
                 return (
                   <div className="mt-4">
                     <Button disabled={true} variant="lightPurple">
@@ -67,6 +68,27 @@ export default function Marketplace({ courses }) {
                 );
               }
 
+              if (!ownedCourses.hasInitialResponse) {
+                return (
+                  <div className="mt-4">
+                    <Button disabled={true} variant="lightPurple">
+                      Loading State
+                    </Button>
+                  </div>
+                );
+              }
+
+              const owned = ownedCourses.lookup[course.id];
+
+              if (owned) {
+                return (
+                  <div className="mt-4">
+                    <Button disabled={true} variant="green">
+                      Ownded
+                    </Button>
+                  </div>
+                );
+              }
               return (
                 <div className="mt-4">
                   <Button
