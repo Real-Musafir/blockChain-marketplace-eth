@@ -42,89 +42,79 @@ export default function Marketplace({ courses }) {
     <>
       <MarketHeader />
       <CourseList courses={courses}>
-        {(course) => (
-          <CourseCard
-            key={course.id}
-            course={course}
-            disabled={!hasConnectedWallet}
-            Footer={() => {
-              if (requireInstall) {
-                return (
-                  <div className="mt-4">
-                    <Button disabled={true} variant="lightPurple">
-                      Install
-                    </Button>
-                  </div>
-                );
-              }
-
-              if (isConnecting) {
-                return (
-                  <div className="mt-4">
-                    <Button disabled={true} variant="lightPurple">
-                      Loading...
-                    </Button>
-                  </div>
-                );
-              }
-
-              if (!ownedCourses.hasInitialResponse) {
-                return (
-                  <div className="mt-4">
-                    <Button disabled={true} variant="lightPurple">
-                      Loading State
-                    </Button>
-                  </div>
-                );
-              }
-
-              const owned = ownedCourses.lookup[course.id];
-
-              if (owned) {
-                return (
-                  <div className="mt-4">
-                    <div>
-                      <Button disabled={true} variant="green">
-                        Ownded
+        {(course) => {
+          const owned = ownedCourses.lookup[course.id];
+          return (
+            <CourseCard
+              key={course.id}
+              course={course}
+              state={owned?.state}
+              disabled={!hasConnectedWallet}
+              Footer={() => {
+                if (requireInstall) {
+                  return (
+                    <div className="mt-4">
+                      <Button disabled={true} variant="lightPurple">
+                        Install
                       </Button>
-                      {owned.state === "deactivated" && (
-                        <Button
-                          onClick={() => alert("Re-activating")}
-                          variant="purple"
-                        >
-                          Fund to Activate
-                        </Button>
-                      )}
                     </div>
-                    {owned.state === "activated" && (
-                      <Message size="sm">Activated</Message>
-                    )}
-                    {owned.state === "deactivated" && (
-                      <Message size="sm" type="danger">
-                        Deactivated
-                      </Message>
-                    )}
+                  );
+                }
 
-                    {owned.state === "purchased" && (
-                      <Message size="sm">Waiting for Activation</Message>
-                    )}
+                if (isConnecting) {
+                  return (
+                    <div className="mt-4">
+                      <Button disabled={true} variant="lightPurple">
+                        Loading...
+                      </Button>
+                    </div>
+                  );
+                }
+
+                if (!ownedCourses.hasInitialResponse) {
+                  return (
+                    <div className="mt-4">
+                      <Button disabled={true} variant="lightPurple">
+                        Loading State
+                      </Button>
+                    </div>
+                  );
+                }
+
+                if (owned) {
+                  return (
+                    <div className="mt-4">
+                      <div>
+                        <Button disabled={true} variant="green">
+                          Ownded
+                        </Button>
+                        {owned.state === "deactivated" && (
+                          <Button
+                            onClick={() => alert("Re-activating")}
+                            variant="purple"
+                          >
+                            Fund to Activate
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="mt-4">
+                    <Button
+                      onClick={() => setSelectedCourse(course)}
+                      disabled={!hasConnectedWallet}
+                      variant="lightPurple"
+                    >
+                      Purchase
+                    </Button>
                   </div>
                 );
-              }
-              return (
-                <div className="mt-4">
-                  <Button
-                    onClick={() => setSelectedCourse(course)}
-                    disabled={!hasConnectedWallet}
-                    variant="lightPurple"
-                  >
-                    Purchase
-                  </Button>
-                </div>
-              );
-            }}
-          />
-        )}
+              }}
+            />
+          );
+        }}
       </CourseList>
       {selectedCourse && (
         <OrderModal
