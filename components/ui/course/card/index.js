@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AnimateKeyframes } from "react-simple-animate";
 
 export default function Card({ course, disabled, Footer, state }) {
   return (
@@ -33,9 +34,16 @@ export default function Card({ course, disabled, Footer, state }) {
               )}
 
               {state === "purchased" && (
-                <div className="text-xs text-black bg-yellow-200 p-1 px-3 rounded-full">
-                  Pending
-                </div>
+                <AnimateKeyframes
+                  play
+                  duration={1}
+                  keyframes={["opacity:0.2", "opacity:1"]}
+                  iterationCount="infinite"
+                >
+                  <div className="text-xs text-black bg-yellow-200 p-1 px-3 rounded-full">
+                    Pending
+                  </div>
+                </AnimateKeyframes>
               )}
             </div>
           </div>
