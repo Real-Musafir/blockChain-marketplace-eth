@@ -9,11 +9,11 @@ const LINKS = [
   },
   {
     href: "/marketplace/courses/owned",
-    value: "My Courses",
+    value: "My Book",
   },
   {
     href: "/marketplace/courses/managed",
-    value: "Manage Courses",
+    value: "Manage Book",
     requireAdmin: true,
   },
 ];

@@ -22,10 +22,10 @@ export default function OwnedCourses({ courses }) {
         {ownedCourses.isEmpty && (
           <div className="w-1/2">
             <Message>
-              <div>You don't owned any courses</div>
+              <div>You don't owned any book</div>
               <Link href="/marketplace">
                 <a className="font-normal hover:underline">
-                  <i>Purchase course</i>
+                  <i>Purchase book</i>
                 </a>
               </Link>
             </Message>
